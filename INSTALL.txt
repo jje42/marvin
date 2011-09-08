@@ -1,0 +1,81 @@
+Installing Construct
+====================
+
+PREREQUISITES
+=============
+
+Windows
+-------
+
+Mac OS X
+--------
+
+Linux
+-----
+
+
+From Source Code
+~~~~~~~~~~~~~~~~
+
+``construct`` requires Python to run.  It will not work with versions in
+the 3.x series i.e., you must install version 2.6 or 2.7.  It also
+requires two Python packages: BioPython and wxPython.
+
+1. Python: http://www.python.org
+2. BioPython: http://biopython.org/wiki/Main_Page
+3. wxPython: http://www.wxpython.org
+
+Each website has instructions for download and installation for all
+major platforms.
+
+Alternatively, both of these dependencies can be found in the Python
+Package Index (PyPI).  If you have ``python`` installed you may also
+have ``pip`` or ``easy_install`` installed.  You can use either of these
+to install the dependencies::
+
+   $ pip install biopython
+   $ pip install wxPython
+
+or ::
+
+   $ easy_install biopython
+   $ easy_install wxPython   
+
+``construct`` uses the distutils package of Python.  You can install the
+program by issuing ::
+
+   $ python setup.py install
+
+in the ``construct`` download directory.
+
+::
+
+   $ wget <url>
+   $ tar jvxf construct-1.0.tar.bz2
+   $ cd construct-1.0/
+   $ python setup.py install --record construct-installed-files.txt
+
+note the use of the ``--record`` option; Python's distutils doesn't
+include a way to uninstall a package, the record option will create a
+file with a list of all installed files.  If you ever want to uninstall
+the package this list will come in handy.
+
+Windows
+~~~~~~~
+
+There is a windows installer available.  It was produced on a Windows 7
+32-bit machine.  If it works for you great; if not, sorry, we do not
+have access to other versions of Windows make installers on.
+
+On Windows this is the easiest option as no other files are required to
+be downloaded/installed.
+
+
+Mac OSX
+~~~~~~~
+
+There is no native .app for OSX; however, ``python`` and
+``easy_install`` should be installed by default so following the
+instructions for source code installation should be relatively straight
+forward. 
+
