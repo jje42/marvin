@@ -1,34 +1,23 @@
 # -*- mode: python; -*-
-# 
-# Copyright (C) Jonathan Ellis 2010
-# 
-# Author: Jonathan Ellis, D.Phil
-# Email:  jonathanjamesellis@gmail.com
-# 
-# This program is not in the public domain.
-# 
-# It may not be copied or made available to third parties, without express
-# permission from the author, but it may be freely used by anyone who has
-# obtained it directly from the author.
-# 
-# The code may be modified as required, but any modifications must be
-# documented so that the person responsible can be identified. If
-# someone else breaks this code, the author doesn't want to be blamed
-# for code that does not work! You may not distribute any
-# modifications, but are encouraged to send them to the author so
-# that they may be incorporated into future versions of the code.
-# 
-# In no event shall the author or any institution in which he is working be
-# liable to any party for direct, indirect, special, incidental, or consequential
-# damages, including lost profits, arising out of the use of this software and
-# its documentation, even if the author has been advised of the possibility of
-# such damage.
-# 
-# The author specifically disclaims any warranties, including, but not 
-# limited to, the implied warranties of merchantability and fitness for 
-# a particular purpose.  the software provided hereunder is on an "as is" 
-# basis, and the author has no obligations to provide maintenance, support, 
-# updates, enhancements, or modifications. 
+#
+# Copyright (C) 2011 Jonathan Ellis
+#
+# Author: Jonathan Ellis <jonathan.ellis.research@gmail.com>
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+# USA
 import sys
 import re
 import urllib
