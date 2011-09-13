@@ -30,8 +30,10 @@ import wx.lib.mixins.listctrl as listmix
 class PreferencesFrame(wx.Frame):
     
     def __init__(self, parent):
-        wx.Frame.__init__(self, parent, title='Preferences',
-                          size=(400, 650))
+        ## wx.Frame.__init__(self, parent, title='Preferences',
+        ##                   size=(400, 650))
+
+        wx.Frame.__init__(self, parent, title='Preferences', size=(400,450))
 
         self.prefs = get_preferences()
 
@@ -116,17 +118,17 @@ class RestrictionPage(wx.Panel):
         self.SetFont(mono)
 
         kwds = dict(majorDimension=1, style=wx.RA_SPECIFY_ROWS)
-        self.rb_b = wx.RadioBox(self, label='B', choices=list('BCGT'),  **kwds)
-        self.rb_d = wx.RadioBox(self, label='D', choices=list('DAGT'),  **kwds)
-        self.rb_h = wx.RadioBox(self, label='H', choices=list('HACT'),  **kwds)
-        self.rb_k = wx.RadioBox(self, label='K', choices=list('KGT'),   **kwds)
-        self.rb_m = wx.RadioBox(self, label='M', choices=list('MAC'),   **kwds)
-        self.rb_n = wx.RadioBox(self, label='N', choices=list('NACGT'), **kwds)
-        self.rb_r = wx.RadioBox(self, label='R', choices=list('RAG'),   **kwds)
-        self.rb_s = wx.RadioBox(self, label='S', choices=list('SCG'),   **kwds)
-        self.rb_v = wx.RadioBox(self, label='V', choices=list('VACG'),  **kwds)
-        self.rb_w = wx.RadioBox(self, label='W', choices=list('WAT'),   **kwds)
-        self.rb_y = wx.RadioBox(self, label='Y', choices=list('YCT'),   **kwds)
+        self.rb_b = wx.RadioBox(self, label='B', choices=list('CGT'),  **kwds)
+        self.rb_d = wx.RadioBox(self, label='D', choices=list('AGT'),  **kwds)
+        self.rb_h = wx.RadioBox(self, label='H', choices=list('ACT'),  **kwds)
+        self.rb_k = wx.RadioBox(self, label='K', choices=list('GT'),   **kwds)
+        self.rb_m = wx.RadioBox(self, label='M', choices=list('AC'),   **kwds)
+        self.rb_n = wx.RadioBox(self, label='N', choices=list('ACGT'), **kwds)
+        self.rb_r = wx.RadioBox(self, label='R', choices=list('AG'),   **kwds)
+        self.rb_s = wx.RadioBox(self, label='S', choices=list('CG'),   **kwds)
+        self.rb_v = wx.RadioBox(self, label='V', choices=list('ACG'),  **kwds)
+        self.rb_w = wx.RadioBox(self, label='W', choices=list('AT'),   **kwds)
+        self.rb_y = wx.RadioBox(self, label='Y', choices=list('CT'),   **kwds)
 
         self.DoLayout()
         self.SetDefaultValues()
@@ -137,19 +139,20 @@ class RestrictionPage(wx.Panel):
         vbox = wx.BoxSizer(wx.VERTICAL)
         vbox.Add(self.cutters, 0, wx.LEFT | wx.RIGHT | wx.TOP, 10)        
         vbox.Add(self.t1, 0, wx.ALL, 10)
-        vbox.Add(self.rb_b, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_d, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_h, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_k, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_m, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_n, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_r, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_s, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_v, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_w, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
-        vbox.Add(self.rb_y, 0, wx.LEFT | wx.RIGHT | wx.EXPAND, 5)
+        gbox = wx.GridSizer(5, 2)
+        gbox.AddMany([(self.rb_b, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_d, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_h, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_k, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_m, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_n, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_r, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_s, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_v, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_w, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10),
+                      (self.rb_y, 1, wx.EXPAND | wx.LEFT | wx.RIGHT, 10)])
+        vbox.Add(gbox, 0, wx.ALL | wx.EXPAND, 5)
         self.SetSizer(vbox)        
-
 
     def OnCuttersCheck(self, event):
         self.topframe.prefs['include_cutters'] = self.cutters.GetValue()
@@ -374,5 +377,17 @@ def test():
     app.MainLoop()
 
 
+def Test():
+
+    class MyApp(wx.App):
+        def OnInit(self):
+            f = PreferencesFrame(None)
+            f.Show(True)
+            return True
+        
+    app = MyApp(True)
+    app.MainLoop()
+
+
 if __name__ == '__main__':
-    test()
+    Test()
