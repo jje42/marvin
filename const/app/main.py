@@ -72,7 +72,7 @@ class MainFrame(wx.Frame):
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title, size=(1100, 700))
 
-        self.builder = const.ConstructBuilder()
+        self.builder = const.RestrictionEnzymeBuilder()
 
         menubar = wx.MenuBar()
 
@@ -126,6 +126,7 @@ class MainFrame(wx.Frame):
         self.nucPage = NucleotidePage(self.note, self)
         self.protPage = ProteinPage(self.note, self)
         self.priPage = PrimerPage(self.note, self)
+
         self.note.AddPage(self.nucPage, 'Nucleotide')
         self.note.AddPage(self.protPage, 'Protein')
         self.note.AddPage(self.priPage, 'Primers')
@@ -164,7 +165,7 @@ class MainFrame(wx.Frame):
         """
         if event.GetId() == 301:
             self.protPage.mode = 'Restrict'
-            self.builder = const.ConstructBuilder()
+            self.builder = const.RestrictionEnzymeBuilder()
             self.statusbar.SetMode('Restriction')
             self.protPage.OnClear(None)
             if self.nucPage.text.GetValue():            
@@ -172,7 +173,7 @@ class MainFrame(wx.Frame):
 
         elif event.GetId() == 302:
             self.protPage.mode = 'LIC'
-            self.builder = const.ConstructBuilder()
+            self.builder = const.LICBuilder()
             self.statusbar.SetMode('LIC')
             self.protPage.OnClear(None)
             if self.nucPage.text.GetValue():

@@ -29,6 +29,10 @@ import const
 #from const.primer import PrimerDesigner, Primer
 
 
+class BuilderError(Exception):
+    """Base class for Builer errors."""
+
+
 class Builder(object):
 
     """Base primer builder class.
@@ -44,8 +48,8 @@ class Builder(object):
         #self.mode = 'Restrict'    # Restrict | LIC | Mutate
         self.forward_overhang = ''
         self.reverse_overhang = ''
-        self.forward_cloning_seq = ''
-        self.reverse_cloning_seq = ''
+        ## self.forward_cloning_seq = ''
+        ## self.reverse_cloning_seq = ''
         self.insert_start_codon = None
         self.insert_stop_codon = None
 
@@ -89,7 +93,7 @@ class Builder(object):
            3-tuple, (forward_primers, reverse_primers, primer_pairs).
            Each item is a list.
         """
-        
+
         fw_primers = []
         rv_primers = []
 
@@ -120,7 +124,7 @@ class Builder(object):
         for fw in sorted(fw_primers):
             for rv in sorted(rv_primers):
                 p = self.protein_seq[fw.position - 1:rv.position]
-                consts.append(const.Construct(fw, rv, p))
+                constructs.append(const.Construct(fw, rv, p))
 
         return constructs
 
@@ -129,10 +133,10 @@ class ConstructBuilder(Builder):
 
     def __init__(self):
         Builder.__init__(self)
-        self.mode = 'Restrict'    # Restrict | LIC
+        #self.mode = 'Restrict'    # Restrict | LIC
         self._start_positions = set()
         self._stop_positions = set()
-        
+
     def add_start_position(self, position):
         self._start_positions.add(position)
 
@@ -151,11 +155,59 @@ class ConstructBuilder(Builder):
         else:
             self._stop_positions.discard(position)
 
+    def clear_positions(self):
+        """Remove all mutation sites from the builder."""
+        self.remove_start_position()
+        self.remove_stop_position()
+
     start_positions = property(lambda self: self._start_positions,
                                None, None, '')
 
     stop_positions = property(lambda self: self._stop_positions,
                               None, None, '')
+
+
+class RestrictionEnzymeBuilder(ConstructBuilder):
+
+    def __init__(self):
+        ConstructBuilder.__init__(self)
+        self.mode = 'Restrict'
+        self.forward_enzyme = None
+        self.reverse_enzyme = None
+
+    def _fcs(self):
+        try:
+            return self.forward_enzyme.site
+        except AttributeError:
+            raise BuilderError('forward enzyme is not set')
+
+    def _rcs(self):
+        try:
+            return self.reverse_enzyme.site
+        except AttributeError:
+            raise BuilderError('reverse enzyme is not set')
+
+    forward_cloning_seq = property(_fcs, None, None, '')
+    reverse_cloning_seq = property(_rcs, None, None, '')
+
+
+
+class LICBuilder(ConstructBuilder):
+
+    def __init__(self):
+        ConstructBuilder.__init__(self)
+        self.mode = 'LIC'
+        self.forward_lic_seq = None
+        self.reverse_lic_seq = None
+
+    def _fcs(self):
+        return self.forward_lic_seq
+
+    def _rcs(self):
+        return self.reverse_lic_seq
+
+    forward_cloning_seq = property(_fcs, None, None, '')
+    reverse_cloning_seq = property(_rcs, None, None, '')
 
 
 class SiteBuilder(Builder):
@@ -168,7 +220,7 @@ class SiteBuilder(Builder):
         self._mutates = set()
 
     sites = property(lambda self: self._mutates, None, None, '')
-        
+
     def add_site(self, number, from_res, to_res):
         """Add a mutation site to the sequence.
 
@@ -181,7 +233,7 @@ class SiteBuilder(Builder):
         [(3, 'R', 'A'), (19, 'R', 'Q')]
         """
         self._mutates.add((number, from_res, to_res))
-        
+
     def remove_site(self, number=None, from_res=None, to_res=None):
         """Remove a mutation site from the sequence.
 
@@ -204,7 +256,11 @@ class SiteBuilder(Builder):
             self._mutates = set()
         else:
             self._mutates.discard((number, from_res, to_res))
-        
+
+    def clear_positions(self):
+        """Remove all muation sites from the builder."""
+        self.remove_site()
+
     def _mutate_sequence(self, sequence, number, to, use_default=True):
         """Mutate the nucleotide sequence (returns new sequence).
 

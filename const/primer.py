@@ -21,6 +21,8 @@
 """"""
 from __future__ import print_function, division
 
+from Bio.Seq import Seq
+
 
 class Primer(object):
 
@@ -36,6 +38,8 @@ class Primer(object):
         self.primer         = primer
         self.reverse        = reverse
         self.tag            = ''
+
+    seq = property(lambda s: Seq(str(s)), None, None, '')
 
     def write(self, handle):
         """Write primer to handle."""

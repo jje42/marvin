@@ -64,11 +64,18 @@ def sequence(enzyme, ambiguous_bases=None):
        nucleotide bases.
     """
     if ambiguous_bases is None:
+        ## ambiguous_bases = dict(A='A', T='T', C='C', G='G',
+        ##                        R='G', Y='C', M='A', K='G',
+        ##                        S='G', W='A', B='C', D='A',
+        ##                        H='A', V='A', N='A')
         ambiguous_bases = dict(A='A', T='T', C='C', G='G',
-                               R='G', Y='C', M='A', K='G',
-                               S='G', W='A', B='C', D='A',
-                               H='A', V='A', N='A')
-    e = getattr(Restriction, enzyme)
-    return Seq(''.join(ambiguous_bases[x] for x in e.site))
+                               R='R', Y='Y', M='M', K='K',
+                               S='S', W='W', B='B', D='D',
+                               H='H', V='V', N='N')        
+    if enzyme != '':
+        e = getattr(Restriction, enzyme)
+        return Seq(''.join(ambiguous_bases[x] for x in e.site))
+    else:
+        return Seq('')
 
 

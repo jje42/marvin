@@ -118,17 +118,17 @@ class RestrictionPage(wx.Panel):
         self.SetFont(mono)
 
         kwds = dict(majorDimension=1, style=wx.RA_SPECIFY_ROWS)
-        self.rb_b = wx.RadioBox(self, label='B', choices=list('CGT'),  **kwds)
-        self.rb_d = wx.RadioBox(self, label='D', choices=list('AGT'),  **kwds)
-        self.rb_h = wx.RadioBox(self, label='H', choices=list('ACT'),  **kwds)
-        self.rb_k = wx.RadioBox(self, label='K', choices=list('GT'),   **kwds)
-        self.rb_m = wx.RadioBox(self, label='M', choices=list('AC'),   **kwds)
-        self.rb_n = wx.RadioBox(self, label='N', choices=list('ACGT'), **kwds)
-        self.rb_r = wx.RadioBox(self, label='R', choices=list('AG'),   **kwds)
-        self.rb_s = wx.RadioBox(self, label='S', choices=list('CG'),   **kwds)
-        self.rb_v = wx.RadioBox(self, label='V', choices=list('ACG'),  **kwds)
-        self.rb_w = wx.RadioBox(self, label='W', choices=list('AT'),   **kwds)
-        self.rb_y = wx.RadioBox(self, label='Y', choices=list('CT'),   **kwds)
+        self.rb_b = wx.RadioBox(self, label='B', choices=list('BCGT'),  **kwds)
+        self.rb_d = wx.RadioBox(self, label='D', choices=list('DAGT'),  **kwds)
+        self.rb_h = wx.RadioBox(self, label='H', choices=list('HACT'),  **kwds)
+        self.rb_k = wx.RadioBox(self, label='K', choices=list('KGT'),   **kwds)
+        self.rb_m = wx.RadioBox(self, label='M', choices=list('MAC'),   **kwds)
+        self.rb_n = wx.RadioBox(self, label='N', choices=list('NACGT'), **kwds)
+        self.rb_r = wx.RadioBox(self, label='R', choices=list('RAG'),   **kwds)
+        self.rb_s = wx.RadioBox(self, label='S', choices=list('SCG'),   **kwds)
+        self.rb_v = wx.RadioBox(self, label='V', choices=list('VACG'),  **kwds)
+        self.rb_w = wx.RadioBox(self, label='W', choices=list('WAT'),   **kwds)
+        self.rb_y = wx.RadioBox(self, label='Y', choices=list('YCT'),   **kwds)
 
         self.DoLayout()
         self.SetDefaultValues()
@@ -250,7 +250,6 @@ class LICListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin,
 
     def OnRemove(self, event):
         item = self.GetFocusedItem()
-        print 'Item =', item
         key = [self.GetItem(item, 0).GetText(), self.GetItem(item, 1).GetText()]
         try:
             idx = self.topframe.prefs['lic_sequences'].index(key)
@@ -304,17 +303,17 @@ _default_config = dict(
                     IUPred=[3, 'PredictorIUPred', 1],
                     GlobPlot=[4, 'PredictorGlobPlot', 1]),
     include_cutters=0,
-    ambiguous_bases=dict(B=dict(C=1, G=0, T=0),
-                         D=dict(A=1, G=0, T=0),
-                         H=dict(A=1, C=0, T=0),
-                         K=dict(G=1, T=0),
-                         M=dict(A=1, C=0),
-                         N=dict(A=1, C=0, G=0, T=0),
-                         R=dict(A=1, G=0),
-                         S=dict(C=1, G=0),
-                         V=dict(A=1, C=0, G=0),
-                         W=dict(A=1, T=0),
-                         Y=dict(C=1, T=0)), 
+    ambiguous_bases=dict(B=dict(B=1, C=0, G=0, T=0),
+                         D=dict(D=1, A=0, G=0, T=0),
+                         H=dict(H=1, A=0, C=0, T=0),
+                         K=dict(K=1, G=0, T=0),
+                         M=dict(M=1, A=0, C=0),
+                         N=dict(N=1, A=0, C=0, G=0, T=0),
+                         R=dict(R=1, A=0, G=0),
+                         S=dict(S=1, C=0, G=0),
+                         V=dict(V=1, A=0, C=0, G=0),
+                         W=dict(W=1, A=0, T=0),
+                         Y=dict(Y=1, C=0, T=0)), 
     lic_sequences=[['Test1', 'cagggacccggt'],
                    ['Test2', 'cgaggagaagcccggtta']])
 

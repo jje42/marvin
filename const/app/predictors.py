@@ -90,6 +90,7 @@ class Predictor(object):
     def __getitem__(self, n):
         return self._prediction[n]
 
+
 class PredictorDummy(Predictor):
 
     """Dummy Predictor implementation for testing."""
@@ -100,6 +101,7 @@ class PredictorDummy(Predictor):
         self._prediction = [random.choice('HS-') for i in
                             range(len(sequence))]
         self.set_name("Dummy")
+
 
 class PredictorHNN(Predictor):
 
@@ -125,7 +127,7 @@ class PredictorHNN(Predictor):
             handle.close()
         except IOError:
             self.set_prediction([' ' for i in range(len(sequence))])
-            
+
     def parse_text_file(self, url):
         p = []
         try:
@@ -164,13 +166,14 @@ class PredictorHNN(Predictor):
             y1 = y + (height / 2.0) - (h / 2.0)
             dc.DrawText(pred, x1, y1)
             x += width
-            
+
+
 class PredictorGOR_IV(Predictor):
 
     base_url = 'http://npsa-pbil.ibcp.fr'
     regex = re.compile(r'^Prediction result file \(text\).*href=(.+?)>GOR4')
     Name = 'GOR-IV'
-    
+
     def __init__(self, sequence):
         Predictor.__init__(self, sequence)
         self.set_name('GOR-IV')
@@ -222,7 +225,6 @@ class PredictorGOR_IV(Predictor):
             y1 = y + (height / 2.0) - (h / 2.0)
             dc.DrawText(pred, x1, y1)
             x += width
-            
 
 
 class PredictorRONN(Predictor):
@@ -276,6 +278,7 @@ class PredictorRONN(Predictor):
             dc.DrawText(pred, x1, y1)
             x += width
 
+
 class PredictorIUPred(Predictor):
     Name = 'IUPred'
     def __init__(self, sequence):
@@ -305,7 +308,8 @@ class PredictorIUPred(Predictor):
                 p.append(str(int(round(float(m.group(3)), 1) * 10)))
             self.set_prediction(p)
         except:
-            self.set_prediction([' ' for i in range(len(sequence))])
+            #self.set_prediction([' ' for i in range(len(sequence))])
+            self.set_prediction(['0' for i in range(len(sequence))])
 
     def strip_ml_tags(self, in_text):
         """Description: Removes all HTML/XML-like tags from the input text.
@@ -323,17 +327,17 @@ class PredictorIUPred(Predictor):
         i,j = 0,0
 
         while i < len(s_list):
-                # iterate until a left-angle bracket is found
-                if s_list[i] == '<':
-                        while s_list[i] != '>':
-                                # pop everything from the the left-angle
-                                # bracket until the right-angle bracket
-                                s_list.pop(i)
+            # iterate until a left-angle bracket is found
+            if s_list[i] == '<':
+                while s_list[i] != '>':
+                    # pop everything from the the left-angle
+                    # bracket until the right-angle bracket
+                    s_list.pop(i)
 
-                        # pops the right-angle bracket, too
-                        s_list.pop(i)
-                else:
-                        i=i+1
+                # pops the right-angle bracket, too
+                s_list.pop(i)
+            else:
+                i=i+1
 
         # convert the list back into text
         join_char=''
@@ -362,7 +366,7 @@ class PredictorIUPred(Predictor):
             x1 = x + (width / 2.0) - (w / 2.0)
             y1 = y + (height / 2.0) - (h / 2.0)
             dc.DrawText(pred, x1, y1)
-            x += width    
+            x += width
 
 
 class PredictorGlobPlot(Predictor):

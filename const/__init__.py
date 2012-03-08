@@ -28,4 +28,5 @@ from const.mconstruct import Construct
 from const.primer import PrimerDesigner
 from const.primer import Primer
 from const.builder import ConstructBuilder, SiteBuilder
+from const.builder import RestrictionEnzymeBuilder, LICBuilder
 

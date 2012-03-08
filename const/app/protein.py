@@ -202,10 +202,12 @@ class ProteinPage(wx.Panel):
         if mode == 'Restrict':
             self._mode = mode
             self.fw_lic.Enable(False)
-            self.fw_rs_entry.Enable(True)
+            #self.fw_rs_entry.Enable(True)
+            self.fw_rs_entry.Enable(False)
             self.fw_rs_btn.Enable(True)
             self.rv_lic.Enable(False)
-            self.rv_rs_entry.Enable(True)
+            #self.rv_rs_entry.Enable(True)
+            self.rv_rs_entry.Enable(False)
             self.rv_rs_btn.Enable(True)
         if mode == 'LIC':
             self._mode = mode
@@ -254,15 +256,17 @@ class ProteinPage(wx.Panel):
                 if dia.enzyme is not None:
                     self.fw_rs_entry.Clear()
                     self.fw_rs_entry.AppendText(dia.enzyme)
-                    s = const.restriction.sequence(dia.enzyme)
-                    self.topframe.builder.forward_cloning_seq = str(s)
+                    #s = const.restriction.sequence(dia.enzyme)
+                    #self.topframe.builder.forward_cloning_seq = str(s)
+                    self.topframe.builder.forward_enzyme = dia.enzyme
             elif Id == self.rv_rs_btn.GetId():
                 if dia.enzyme is not None:
                     self.rv_rs_entry.Clear()
                     self.rv_rs_entry.AppendText(dia.enzyme)
-                    s = const.restriction.sequence(dia.enzyme)
-                    s.reverse_complement()
-                    self.topframe.builder.reverse_cloning_seq = str(s)
+                    # s = const.restriction.sequence(dia.enzyme)
+                    # s.reverse_complement()
+                    # self.topframe.builder.reverse_cloning_seq = str(s)
+                    self.topframe.builder.reverse_enzyme = dia.enzyme
             else:
                 pass
         else:
@@ -281,11 +285,13 @@ class ProteinPage(wx.Panel):
             if obj.GetId() == self.fw_lic.GetId():
                 for i, j in prefs['lic_sequences']:
                     if i == value:
-                        self.topframe.builder.forward_cloning_seq = j
+                        #self.topframe.builder.forward_cloning_seq = j
+                        self.topframe.builder.forward_lic_seq = j
             elif obj.GetId() == self.rv_lic.GetId():
                 for i, j in prefs['lic_sequences']:
                     if i == value:
-                        self.topframe.builder.reverse_cloning_seq = j
+                        #self.topframe.builder.reverse_cloning_seq = j
+                        self.topframe.builder.reverse_lic_seq = j
             else:
                 pass
             
@@ -293,16 +299,18 @@ class ProteinPage(wx.Panel):
     def OnTextChange(self, event):
         obj = event.GetEventObject()
         value = obj.GetValue()
-        if set(value.lower()).issubset('atgc'):
-            obj.SetBackgroundColour('WHITE')
-        else:
-            obj.SetBackgroundColour('RED')
-        if obj.GetId() == self.fw_overhang.GetId():
-            self.topframe.builder.forward_overhang = value
-        elif obj.GetId() == self.rv_overhang.GetId():
-            self.topframe.builder.reverse_overhang = value
-        else:
-            pass
+        oid = obj.GetId()
+        if oid == self.fw_overhang.GetId() or oid == self.rv_overhang.GetId():
+            if set(value.lower()).issubset('atgc'):
+                obj.SetBackgroundColour('WHITE')
+            else:
+                obj.SetBackgroundColour('RED')
+            if obj.GetId() == self.fw_overhang.GetId():
+                self.topframe.builder.forward_overhang = value
+            elif obj.GetId() == self.rv_overhang.GetId():
+                self.topframe.builder.reverse_overhang = value
+            else:
+                pass
 
     def OnCheck(self, event):
         """Handler for checkboxes."""
@@ -465,10 +473,12 @@ class ProteinCanvas(wx.ScrolledWindow):
             self.Refresh(True)
 
         dc.EndDrawing()
-        if self.topframe.builder.mode in ['Restrict', 'LIC']:
-            self.topframe.builder = const.ConstructBuilder()
-        else:
-            self.topframe.builder = const.SiteBuilder()
+        ## if self.topframe.builder.mode in ['Restrict', 'LIC']:
+        ##     self.topframe.builder = const.ConstructBuilder()
+        ## else:
+        ##     self.topframe.builder = const.SiteBuilder()
+        self.topframe.builder.clear_positions()
+
 
     def OnPaint(self, event):
         dc = wx.BufferedPaintDC(self)
@@ -627,10 +637,10 @@ class RestrictionDialog(wx.Dialog):
         self.lst.InsertItems(sorted(self.noncutters), 0)
         self.select = wx.Button(self, wx.ID_OK, label='OK')
         self.cancel = wx.Button(self, wx.ID_CANCEL, label='Cancel')
-        self.clear = wx.Button(self, wx.ID_CLEAR, label='Clear')
+        #self.clear = wx.Button(self, wx.ID_CLEAR, label='Clear')
         buttons = wx.BoxSizer(wx.HORIZONTAL)
         buttons.Add(self.cancel, 0, wx.ALIGN_RIGHT)
-        buttons.Add(self.clear, 0, wx.ALIGN_RIGHT)
+        #buttons.Add(self.clear, 0, wx.ALIGN_RIGHT)
         buttons.Add(self.select, 0, wx.ALIGN_RIGHT)
         sizer = wx.BoxSizer(wx.VERTICAL)
         sizer.Add(self.search, 0, wx.EXPAND | wx.ALL, 5)
@@ -640,7 +650,7 @@ class RestrictionDialog(wx.Dialog):
         self.Centre()
         self.Bind(wx.EVT_TEXT, self.DoOnSearch, self.search)
         self.Bind(wx.EVT_BUTTON, self.OnSelect, self.select)
-        self.Bind(wx.EVT_BUTTON, self.OnClear, self.clear)
+        #self.Bind(wx.EVT_BUTTON, self.OnClear, self.clear)
 
     def DoOnSearch(self, event):
         term = self.search.GetValue()
@@ -657,9 +667,9 @@ class RestrictionDialog(wx.Dialog):
         self.enzyme = value
         self.Destroy()
 
-    def OnClear(self, event):
-        self.enzyme = ''
-        self.Destroy()
+    # def OnClear(self, event):
+    #     self.enzyme = ''
+    #     self.Destroy()
         
     def OnCancel(self, event):
         self.enzyme = None
