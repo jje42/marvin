@@ -37,6 +37,9 @@ class ProteinPage(wx.Panel):
     def __init__(self, parent, topframe, mode='Restrict'):
         wx.Panel.__init__(self, parent)
 
+        # This is a stub until I find a better way of doing it.
+        have_emboss = False
+
         self.topframe = topframe
         #self._mode = mode
         self._mode = ''
@@ -48,12 +51,14 @@ class ProteinPage(wx.Panel):
         self.hbox.Add(wx.Button(self, wx.ID_SAVE, 'Save'), 0, wx.ALL, 5)
         self.hbox.Add(wx.Button(self, wx.ID_CLEAR, 'Clear'), 0, wx.ALL, 5)
         self.hbox.Add(wx.Button(self, 22, 'Clear Positions'), 0, wx.ALL, 5)
-        self.hbox.Add(wx.Button(self, 25, 'EMBOSS'), 0, wx.ALL, 5)
+        if have_emboss:
+            self.hbox.Add(wx.Button(self, 25, 'EMBOSS'), 0, wx.ALL, 5)
 
         self.Bind(wx.EVT_BUTTON, self.OnTranslate, id=20)
         self.Bind(wx.EVT_BUTTON, self.OnRun,       id=23)
         self.Bind(wx.EVT_BUTTON, self.OnSave,      id=wx.ID_SAVE)
-        self.Bind(wx.EVT_BUTTON, self.OnEmboss,    id=25)
+        if have_emboss:
+            self.Bind(wx.EVT_BUTTON, self.OnEmboss,    id=25)
 
         # Forward
         self.t1          = wx.StaticText(self, -1, 'Forward Overhang:')
