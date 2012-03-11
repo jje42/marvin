@@ -1,37 +1,15 @@
-# -*- mode: python; -*-
-#
-# Copyright (C) 2011 Jonathan Ellis
-#
-# Author: Jonathan Ellis <jonathan.ellis.research@gmail.com>
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-# USA
-"""
-"""
 import os
 import wx
 from wx.lib.wordwrap import wordwrap
 
-import const
-import const.app.preferences as prefs
-from const.app.nucleotide import NucleotidePage
-from const.app.protein import ProteinPage
-from const.app.primer import PrimerPage
-from const.app.help import HelpFrame
-from const.app.preferences import PreferencesFrame
-from const.app.codon import CodonFrame
+import Marvin
+import Marvin.app.preferences as prefs
+from Marvin.app.nucleotide import NucleotidePage
+from Marvin.app.protein import ProteinPage
+from Marvin.app.primer import PrimerPage
+from Marvin.app.help import HelpFrame
+from Marvin.app.preferences import PreferencesFrame
+from Marvin.app.codon import CodonFrame
 
 
 class CustomStatusBar(wx.StatusBar):
@@ -72,7 +50,7 @@ class MainFrame(wx.Frame):
     def __init__(self, parent, id, title):
         wx.Frame.__init__(self, parent, id, title, size=(1100, 700))
 
-        self.builder = const.RestrictionEnzymeBuilder()
+        self.builder = Marvin.RestrictionEnzymeBuilder()
 
         menubar = wx.MenuBar()
 
@@ -165,7 +143,7 @@ class MainFrame(wx.Frame):
         """
         if event.GetId() == 301:
             self.protPage.mode = 'Restrict'
-            self.builder = const.RestrictionEnzymeBuilder()
+            self.builder = Marvin.RestrictionEnzymeBuilder()
             self.statusbar.SetMode('Restriction')
             self.protPage.OnClear(None)
             if self.nucPage.text.GetValue():            
@@ -173,7 +151,7 @@ class MainFrame(wx.Frame):
 
         elif event.GetId() == 302:
             self.protPage.mode = 'LIC'
-            self.builder = const.LICBuilder()
+            self.builder = Marvin.LICBuilder()
             self.statusbar.SetMode('LIC')
             self.protPage.OnClear(None)
             if self.nucPage.text.GetValue():
@@ -181,7 +159,7 @@ class MainFrame(wx.Frame):
 
         elif event.GetId() == 303:
             self.protPage.mode = 'Mutate'
-            self.builder = const.SiteBuilder()
+            self.builder = Marvin.SiteBuilder()
             self.statusbar.SetMode('Site Mutagenisis')
             self.protPage.OnClear(None)
             if self.nucPage.text.GetValue():
@@ -205,13 +183,13 @@ class MainFrame(wx.Frame):
     def OnAbout(self, event):
         info = wx.AboutDialogInfo()
         info.Name = 'Construct'
-        info.Version = const.__version__
+        info.Version = Marvin.__version__
         info.Copyright = '(C) 2010-2011 Jonathan Ellis'
         info.Description = wordwrap('Design your primers here',
                                     350, wx.ClientDC(self))
         info.WebSite = ''
         info.Developers = ['Jonathan Ellis']
-        licenceText = const.__license__
+        licenceText = Marvin.__license__
         info.License = wordwrap(licenceText, 1500, wx.ClientDC(self))
         wx.AboutBox(info)
         

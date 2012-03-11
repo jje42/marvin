@@ -1,5 +1,4 @@
 #! /usr/bin/env python
-# -*- mode: python; coding: utf-8; -*-
 """Test LICBuilder.
 
 """
@@ -10,9 +9,9 @@ sys.path.insert(0, os.pardir)
 
 import unittest2 as unittest
 
-import const.codon as codon
-import const.restriction as restriction
-from const.builder import LICBuilder
+import Marvin.codon as codon
+import Marvin.restriction as restriction
+from Marvin.builder import LICBuilder
 
 from Bio import SeqIO
 

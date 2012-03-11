@@ -17,9 +17,9 @@ import unittest2 as unittest
 from Bio import SeqIO
 from Bio import Restriction
 
-import const.codon as codon
-import const.restriction as restriction
-from const.builder import RestrictionEnzymeBuilder
+import Marvin.codon as codon
+import Marvin.restriction as restriction
+from Marvin.builder import RestrictionEnzymeBuilder
 
 
 class RestrictionEnzymeBuilderIntegrationTestCase(unittest.TestCase):

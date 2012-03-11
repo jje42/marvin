@@ -1,34 +1,14 @@
-# -*- mode: python; -*-
-#
-# Copyright (C) 2011 Jonathan Ellis
-#
-# Author: Jonathan Ellis <jonathan.ellis.research@gmail.com>
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-# USA
 import os
 import sys
 import textwrap
 from StringIO import StringIO
 import wx
 
-import const
-import const.restriction
-import const.app.predictors
-import const.app.preferences as preferences
-from const.app.emboss import EmbossFrame
+import Marvin
+import Marvin.restriction
+import Marvin.app.predictors
+import Marvin.app.preferences as preferences
+from Marvin.app.emboss import EmbossFrame
 
 
 
@@ -193,7 +173,7 @@ class ProteinPage(wx.Panel):
             if use:
                 self.topframe.SetStatusText('Running {0}'.format(predictor))
                 #C = getattr(__import__(__name__), classname)
-                C = getattr(const.app.predictors, classname)
+                C = getattr(Marvin.app.predictors, classname)
                 p = C(protseq)
                 self._predictions.append(p)
                 self.win.DrawPrediction(p)
@@ -261,14 +241,14 @@ class ProteinPage(wx.Panel):
                 if dia.enzyme is not None:
                     self.fw_rs_entry.Clear()
                     self.fw_rs_entry.AppendText(dia.enzyme)
-                    #s = const.restriction.sequence(dia.enzyme)
+                    #s = Marvin.restriction.sequence(dia.enzyme)
                     #self.topframe.builder.forward_cloning_seq = str(s)
                     self.topframe.builder.forward_enzyme = dia.enzyme
             elif Id == self.rv_rs_btn.GetId():
                 if dia.enzyme is not None:
                     self.rv_rs_entry.Clear()
                     self.rv_rs_entry.AppendText(dia.enzyme)
-                    # s = const.restriction.sequence(dia.enzyme)
+                    # s = Marvin.restriction.sequence(dia.enzyme)
                     # s.reverse_complement()
                     # self.topframe.builder.reverse_cloning_seq = str(s)
                     self.topframe.builder.reverse_enzyme = dia.enzyme
@@ -454,7 +434,7 @@ class ProteinCanvas(wx.ScrolledWindow):
         dc.EndDrawing()
 
     def ClearCanvas(self, event):
-        if isinstance(self.topframe.builder, const.ConstructBuilder):
+        if isinstance(self.topframe.builder, Marvin.ConstructBuilder):
             self.topframe.builder.remove_start_position()
             self.topframe.builder.remove_stop_position()
         else:
@@ -479,9 +459,9 @@ class ProteinCanvas(wx.ScrolledWindow):
 
         dc.EndDrawing()
         ## if self.topframe.builder.mode in ['Restrict', 'LIC']:
-        ##     self.topframe.builder = const.ConstructBuilder()
+        ##     self.topframe.builder = Marvin.ConstructBuilder()
         ## else:
-        ##     self.topframe.builder = const.SiteBuilder()
+        ##     self.topframe.builder = Marvin.SiteBuilder()
         self.topframe.builder.clear_positions()
 
 
@@ -634,7 +614,7 @@ class RestrictionDialog(wx.Dialog):
         self.sequence = nucleotide_seq
         self.enzyme = ''
 
-        enzymes = const.restriction.do_not_cut(nucleotide_seq)
+        enzymes = Marvin.restriction.do_not_cut(nucleotide_seq)
         self.noncutters = [str(x) for x in enzymes]
 
         self.search = wx.SearchCtrl(self, style=wx.TE_PROCESS_ENTER)

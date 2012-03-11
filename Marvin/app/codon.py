@@ -1,23 +1,3 @@
-# -*- mode: python; -*-
-#
-# Copyright (C) 2011 Jonathan Ellis
-#
-# Author: Jonathan Ellis <jonathan.ellis.research@gmail.com>
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-# USA
 """
 Codon Usage Database (www.kazusa.or.jp/codon)
 """
@@ -25,7 +5,7 @@ import re
 import urllib, urllib2
 import wx
 
-import const.codon
+import Marvin.codon
 
 
 class CodonFrame(wx.Frame):
@@ -76,7 +56,7 @@ class CodonFrame(wx.Frame):
 
     def OnSearch(self, event):
         try:
-            result = const.codon.search(self.search_text.GetValue())
+            result = Marvin.codon.search(self.search_text.GetValue())
         except ValueError as err:
             msg = ('Sorry, no species found. Check your spelling\nand '
                    'try again.')
@@ -98,7 +78,7 @@ class CodonFrame(wx.Frame):
             x = x[0]
             sp_name, sp_id = self.d[x]
             builder = self.topframe.builder 
-            builder.codon_table = const.codon.usage_table(sp_id)
+            builder.codon_table = Marvin.codon.usage_table(sp_id)
             self.Close()
 
     def Populate(self, choices):

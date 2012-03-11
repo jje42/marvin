@@ -1,32 +1,10 @@
-# -*- mode: python; -*-
-#
-# Copyright (C) 2011 Jonathan Ellis
-#
-# Author: Jonathan Ellis <jonathan.ellis.research@gmail.com>
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2 of the
-# License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
-# USA
-""""""
 from __future__ import print_function, division
 
 from StringIO import StringIO
 from Bio.Seq import Seq
 from Bio import SeqIO
 
-import const
-#from const.primer import PrimerDesigner, Primer
+import Marvin
 
 
 class BuilderError(Exception):
@@ -101,9 +79,9 @@ class Builder(object):
         # Reverse compliment of stop codon (UAG)
         has_stop = 'CTA' if self.insert_stop_codon else ''
         for start in self.start_positions:
-            fw = const.PrimerDesigner(self.nucleotide_seq, start,
+            fw = Marvin.PrimerDesigner(self.nucleotide_seq, start,
                                       'Forward', **kwds)
-            fw_primer = const.Primer(start,
+            fw_primer = Marvin.Primer(start,
                                      self.forward_overhang,
                                      self.forward_cloning_seq,
                                      has_start,
@@ -111,9 +89,9 @@ class Builder(object):
             fw_primers.append(fw_primer)
 
         for stop in self.stop_positions:
-            rv = const.PrimerDesigner(self.nucleotide_seq, stop,
+            rv = Marvin.PrimerDesigner(self.nucleotide_seq, stop,
                                       'Reverse', **kwds)
-            rv_primer = const.Primer(stop,
+            rv_primer = Marvin.Primer(stop,
                                      self.reverse_overhang,
                                      self.reverse_cloning_seq,
                                      has_stop,
@@ -124,7 +102,7 @@ class Builder(object):
         for fw in sorted(fw_primers):
             for rv in sorted(rv_primers):
                 p = self.protein_seq[fw.position - 1:rv.position]
-                constructs.append(const.Construct(fw, rv, p))
+                constructs.append(Marvin.Construct(fw, rv, p))
 
         return constructs
 
@@ -308,15 +286,15 @@ class SiteBuilder(Builder):
                 new_seq = self._mutate_sequence(
                     self.nucleotide_seq, number, to_res, False)
 
-            fw = const.PrimerDesigner(new_seq, number, 'Site', **kwds)
-            fw_primer = const.Primer(number,
+            fw = Marvin.PrimerDesigner(new_seq, number, 'Site', **kwds)
+            fw_primer = Marvin.Primer(number,
                                      self.forward_overhang,
                                      '',
                                      '',
                                      str(fw))
 
             rv = fw.primer.reverse_complement()
-            rv_primer = const.Primer(number,
+            rv_primer = Marvin.Primer(number,
                                      self.reverse_overhang,
                                      '',
                                      '',
@@ -326,6 +304,6 @@ class SiteBuilder(Builder):
             fw_primers.append(fw_primer)
             rv_primers.append(rv_primer)
             p = str(new_seq.translate())
-            constructs.append(const.Construct(fw_primer, rv_primer, p))
+            constructs.append(Marvin.Construct(fw_primer, rv_primer, p))
 
         return constructs

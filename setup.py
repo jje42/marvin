@@ -1,10 +1,10 @@
 from distutils.core import setup
 
-import const
+import Marvin
 
 
 setup(name='marvin',
-      version=const.__version__,
+      version=Marvin.__version__,
       description='A program to aid crystallography construct design.',
       author='Jonathan Ellis',
       author_email='jonathan.j.ellis@gmail.com',

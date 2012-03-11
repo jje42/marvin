@@ -1,6 +1,4 @@
 #! /usr/bin/env python
-# -*- mode: python; coding: utf-8; -*-
-""""""
 from __future__ import print_function, division
 
 
@@ -9,9 +7,9 @@ sys.path.insert(0, os.pardir)
 
 import unittest2 as unittest
 
-import const.codon as codon
-import const.restriction as restriction
-from const.builder import SiteBuilder
+import Marvin.codon as codon
+import Marvin.restriction as restriction
+from Marvin.builder import SiteBuilder
 
 from Bio import SeqIO
 
