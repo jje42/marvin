@@ -11,7 +11,8 @@ For details on installing the program please see INSTALL.txt.
 Bug Reports
 -----------
 
-Please report bugs to jonathan.ellis.research@gmail.com
+Please report bugs to https://github.com/jjellis/marvin/issues or email 
+jonathan.j.ellis@gmail.com
 
 License information
 -------------------

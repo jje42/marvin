@@ -1,5 +1,5 @@
-Installing Construct
-====================
+Installing Marvin
+=================
 
 PREREQUISITES
 =============
@@ -17,7 +17,7 @@ Linux
 From Source Code
 ~~~~~~~~~~~~~~~~
 
-``construct`` requires Python to run.  It will not work with versions in
+``marvin`` requires Python to run.  It will not work with versions in
 the 3.x series i.e., you must install version 2.6 or 2.7.  It also
 requires two Python packages: BioPython and wxPython.
 
@@ -41,19 +41,19 @@ or ::
    $ easy_install biopython
    $ easy_install wxPython   
 
-``construct`` uses the distutils package of Python.  You can install the
+``marvin`` uses the distutils package of Python.  You can install the
 program by issuing ::
 
    $ python setup.py install
 
-in the ``construct`` download directory.
+in the ``marvin`` download directory.
 
 ::
 
    $ wget <url>
-   $ tar jvxf construct-1.0.tar.bz2
-   $ cd construct-1.0/
-   $ python setup.py install --record construct-installed-files.txt
+   $ tar jvxf marvin-0.6.tar.bz2
+   $ cd marvin-0.6/ 
+   $ python setup.py install --record marvin-installed-files.txt
 
 note the use of the ``--record`` option; Python's distutils doesn't
 include a way to uninstall a package, the record option will create a
