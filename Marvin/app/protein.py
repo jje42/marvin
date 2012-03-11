@@ -240,14 +240,14 @@ class ProteinPage(wx.Panel):
             if Id == self.fw_rs_btn.GetId():
                 if dia.enzyme is not None:
                     self.fw_rs_entry.Clear()
-                    self.fw_rs_entry.AppendText(dia.enzyme)
+                    self.fw_rs_entry.AppendText(str(dia.enzyme))
                     #s = Marvin.restriction.sequence(dia.enzyme)
                     #self.topframe.builder.forward_cloning_seq = str(s)
                     self.topframe.builder.forward_enzyme = dia.enzyme
             elif Id == self.rv_rs_btn.GetId():
                 if dia.enzyme is not None:
                     self.rv_rs_entry.Clear()
-                    self.rv_rs_entry.AppendText(dia.enzyme)
+                    self.rv_rs_entry.AppendText(str(dia.enzyme))
                     # s = Marvin.restriction.sequence(dia.enzyme)
                     # s.reverse_complement()
                     # self.topframe.builder.reverse_cloning_seq = str(s)
@@ -608,6 +608,8 @@ class MutateResidue(wx.Dialog):
         self.Destroy()
 
 
+from Bio import Restriction
+
 class RestrictionDialog(wx.Dialog):
     def __init__(self, parent, nucleotide_seq):
         wx.Dialog.__init__(self, parent, title='Select a restriction enzyme')
@@ -649,7 +651,8 @@ class RestrictionDialog(wx.Dialog):
     def OnSelect(self, event):
         index = self.lst.GetSelection()
         value = self.lst.GetString(index)
-        self.enzyme = value
+        #self.enzyme = value
+        self.enzyme = getattr(Restriction, value)
         self.Destroy()
 
     # def OnClear(self, event):

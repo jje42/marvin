@@ -55,8 +55,8 @@ class MainFrame(wx.Frame):
         menubar = wx.MenuBar()
 
         mfile = wx.Menu()
-        mfile.Append(wx.ID_OPEN, '&Open', 'Open a document')
-        mfile.AppendSeparator()
+        #mfile.Append(wx.ID_OPEN, '&Open', 'Open a document')
+        #mfile.AppendSeparator()
         #mquit = wx.MenuItem(mfile, 105, '&Quit\tCtrl+Q', 'Quit the application')
         mfile.Append(wx.ID_EXIT, '&Quit\tCtrl+Q', 'Quit the application')
         menubar.Append(mfile, '&File')
@@ -182,7 +182,7 @@ class MainFrame(wx.Frame):
 
     def OnAbout(self, event):
         info = wx.AboutDialogInfo()
-        info.Name = 'Construct'
+        info.Name = 'Marvin'
         info.Version = Marvin.__version__
         info.Copyright = '(C) 2010-2011 Jonathan Ellis'
         info.Description = wordwrap('Design your primers here',
@@ -196,7 +196,7 @@ class MainFrame(wx.Frame):
 
 class Application(wx.App):
     def OnInit(self):
-        self.frame = MainFrame(None, -1, 'Construct')
+        self.frame = MainFrame(None, -1, 'Marvin')
         self.frame.Show(True)
         return True
 

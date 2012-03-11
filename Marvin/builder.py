@@ -5,6 +5,7 @@ from Bio.Seq import Seq
 from Bio import SeqIO
 
 import Marvin
+#from Marvin.primer import PrimerDesigner, Primer
 
 
 class BuilderError(Exception):
@@ -157,13 +158,15 @@ class RestrictionEnzymeBuilder(ConstructBuilder):
         try:
             return self.forward_enzyme.site
         except AttributeError:
-            raise BuilderError('forward enzyme is not set')
+            #raise BuilderError('forward enzyme is not set')
+            return ''
 
     def _rcs(self):
         try:
             return self.reverse_enzyme.site
         except AttributeError:
-            raise BuilderError('reverse enzyme is not set')
+            #raise BuilderError('reverse enzyme is not set')
+            return ''
 
     forward_cloning_seq = property(_fcs, None, None, '')
     reverse_cloning_seq = property(_rcs, None, None, '')

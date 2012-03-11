@@ -1,7 +1,7 @@
 """Marvin, a program to aid crystallography construct design.
 """
 __author__ = 'Jonathan Ellis'
-__version__ = '1.0'
+__version__ = '0.6'
 __license__ = 'GPL'
 
 from Marvin.construct import Construct

@@ -2,10 +2,8 @@ import os
 import wx
 from Bio.Seq import Seq
 
-
 class CodonError(Exception):
     pass
-
 
 class PrimerPage(wx.Panel):
 
@@ -107,9 +105,21 @@ class PrimerPage(wx.Panel):
                                          '-> Codon Usage)')
             self.constructs = self.topframe.builder.design(use_default=True,
                                                            **kwds)
+#        for construct in self.constructs:
+#            self.print_primer(construct.forward_primer)
+#            self.print_primer(construct.reverse_primer)
+        
+        # Only print each primer once, despite it potentially being used for
+        # multiple constructs.
+
+        forward_primers = set()
+        reverse_primers = set()
         for construct in self.constructs:
-            self.print_primer(construct.forward_primer)
-            self.print_primer(construct.reverse_primer)
+            forward_primers.add(construct.forward_primer)
+            reverse_primers.add(construct.reverse_primer)
+
+        for primer in forward_primers.union(reverse_primers):
+            self.print_primer(primer)
 
         for construct in self.constructs:
             self.seq_win.AppendText(
