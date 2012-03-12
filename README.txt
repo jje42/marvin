@@ -1,10 +1,10 @@
 .. -*- mode: rst; -*-
 
-=========
-Construct
-=========
+======
+Marvin
+======
 
-``construct`` is a program to aid in the design of primers for creating
+``marvin`` is a program to aid in the design of primers for creating
 protein constructs.
 
 For details on installing the program please see INSTALL.txt.
