@@ -13,7 +13,7 @@ mutagenesis.
 setup(name='marvin',
       version=Marvin.__version__,
       description='A program to aid crystallography construct design.',
-      long_description=description
+      long_description=description,
       author='Jonathan Ellis',
       author_email='jonathan.j.ellis@gmail.com',
       url='http://jjellis.github.com/marvin',
