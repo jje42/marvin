@@ -9,9 +9,13 @@ body {
   background: #fff;
   margin: 50px 100px;
   padding: 50px;
-  color: #222;
+  background-image: url(static/topleft.gif), url(static/topright.gif), url(static/bottomleft.gif), url(static/bottomright.gif);
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: top left, top right, bottom left, bottom right;
+  /*
   border-radius: 25px;
   -moz-border-radius: 25px;
+  */
 }
 
 h1, h2 {
