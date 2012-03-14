@@ -2,6 +2,17 @@
 Installing Marvin
 +++++++++++++++++
 
+``marvin`` requires Python to run.  It has not been tested with the 3.x
+series, and we recommend sticking with version 2.6 or 2.7.  It also
+requires two Python packages: BioPython and wxPython.
+
+1. Python: http://www.python.org
+2. BioPython: http://biopython.org/wiki/Main_Page
+3. wxPython: http://www.wxpython.org
+
+Each website has instructions for download and installation for all
+major platforms.
+
 Windows
 =======
 
@@ -12,19 +23,25 @@ have access to other versions of Windows to make installers on.
 On Windows this is the easiest option as no other files are required to
 be downloaded/installed.
 
+Mac OS X
+========
+
+On Mac OS X the simplest way to install the required dependencies is
+through ``fink`` (http://finkproject.org).  The packages you need to
+install are ::
+
+   python26 wxgtk2.8-py26 biopython-py26
+
+or if you would prefer to use Python version 2.7 ::
+
+   python26 wxgtk2.8-py27 biopython-py27
+
+You can then install ``marvin`` by following the installing from source
+code instructions.
+
 Unix/Linux
 ==========
 
-``marvin`` requires Python to run.  It has not been tested with the 3.x
-series, and we recommend sticking with version 2.6 or 2.7.  It also
-requires two Python packages: BioPython and wxPython.
-
-1. Python: http://www.python.org
-2. BioPython: http://biopython.org/wiki/Main_Page
-3. wxPython: http://www.wxpython.org
-
-Each website has instructions for download and installation for all
-major platforms, but the recommended way to get these dependencies is
 through your system package manager.  To install dependancies on a
 Debian/Ubuntu type system run ::
 
