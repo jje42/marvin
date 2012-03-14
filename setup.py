@@ -1,6 +1,5 @@
 from distutils.core import setup
 
-import Marvin
 
 description = """
 Marvin is a program to help molecular biologists when designing protein
@@ -11,16 +10,16 @@ mutagenesis.
 """
 
 setup(name='marvin',
-      version=Marvin.__version__,
-      description='A program to aid crystallography construct design.',
-      long_description=description,
-      author='Jonathan Ellis',
-      author_email='jonathan.j.ellis@gmail.com',
-      url='http://jjellis.github.com/marvin',
+      version='0.6.2',
       packages=['Marvin', 'Marvin.app'],
       scripts=['scripts/marvin.py'],
       provides=['Marvin', 'Marvin.app'],
-      requires=['wx (>=2.8)', 'Bio'],
+
+      author='Jonathan Ellis',
+      author_email='jonathan.j.ellis@gmail.com',
+      description='A program to aid crystallography construct design.',
+      long_description=description,
+      url='http://jjellis.github.com/marvin',
       classifiers = [
           'Topic :: Scientific/Engineering',
           'Intended Audience :: Science/Research',

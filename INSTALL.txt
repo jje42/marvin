@@ -1,24 +1,22 @@
++++++++++++++++++
 Installing Marvin
-=================
-
-PREREQUISITES
-=============
++++++++++++++++++
 
 Windows
--------
+=======
 
-Mac OS X
---------
+There is a windows installer available.  It was produced on a Windows 7
+32-bit machine.  If it works for you great; if not, sorry, we do not
+have access to other versions of Windows to make installers on.
 
-Linux
------
+On Windows this is the easiest option as no other files are required to
+be downloaded/installed.
 
+Unix/Linux
+==========
 
-From Source Code
-~~~~~~~~~~~~~~~~
-
-``marvin`` requires Python to run.  It will not work with versions in
-the 3.x series i.e., you must install version 2.6 or 2.7.  It also
+``marvin`` requires Python to run.  It has not been tested with the 3.x
+series, and we recommend sticking with version 2.6 or 2.7.  It also
 requires two Python packages: BioPython and wxPython.
 
 1. Python: http://www.python.org
@@ -26,23 +24,26 @@ requires two Python packages: BioPython and wxPython.
 3. wxPython: http://www.wxpython.org
 
 Each website has instructions for download and installation for all
-major platforms.
+major platforms, but the recommended way to get these dependencies is
+through your system package manager.  To install dependancies on a
+Debian/Ubuntu type system run ::
 
-Alternatively, both of these dependencies can be found in the Python
-Package Index (PyPI).  If you have ``python`` installed you may also
-have ``pip`` or ``easy_install`` installed.  You can use either of these
-to install the dependencies::
+   # aptitude install python-biopython python-wxgtk2.8
 
-   $ pip install biopython
-   $ pip install wxPython
+On a Fedora system you can use ``yum`` ::
 
-or ::
+  # yum install python-biopython wxPython
 
-   $ easy_install biopython
-   $ easy_install wxPython   
+On Gentoo Linux run ::
 
-``marvin`` uses the distutils package of Python.  You can install the
-program by issuing ::
+  # emerge -va biopython wxpython
+
+For other distributions, please consult your package managers
+documentation on how to search for and install packages.
+
+Once the dependencies have been installed, you can install ``marvin``
+from source code.  ``marvin`` uses the distutils package of Python.  You
+can install the program by issuing ::
 
    $ python setup.py install
 
@@ -51,8 +52,8 @@ in the ``marvin`` download directory.
 ::
 
    $ wget <url>
-   $ tar jvxf marvin-0.6.tar.bz2
-   $ cd marvin-0.6/ 
+   $ tar jvxf marvin-<version>.tar.bz2
+   $ cd marvin-<version>/ 
    $ python setup.py install --record marvin-installed-files.txt
 
 note the use of the ``--record`` option; Python's distutils doesn't
@@ -60,22 +61,13 @@ include a way to uninstall a package, the record option will create a
 file with a list of all installed files.  If you ever want to uninstall
 the package this list will come in handy.
 
-Windows
-~~~~~~~
+You can type ::
 
-There is a windows installer available.  It was produced on a Windows 7
-32-bit machine.  If it works for you great; if not, sorry, we do not
-have access to other versions of Windows make installers on.
+  $ python setup.py --help-commands
 
-On Windows this is the easiest option as no other files are required to
-be downloaded/installed.
+to get a list of all availble commands.  A useful one, if you don't have
+administrator privileges on your machine is ::
 
+   $ python setup.py install --user
 
-Mac OSX
-~~~~~~~
-
-There is no native .app for OSX; however, ``python`` and
-``easy_install`` should be installed by default so following the
-instructions for source code installation should be relatively straight
-forward. 
-
+(read the documentation to for an explanation of this command.)
